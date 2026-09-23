@@ -1,0 +1,45 @@
+name: Restore project structure
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    if: ${{ !contains(github.event.head_commit.message, 'Restore project structure') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Restore project from ZIP
+        run: |
+          set -e
+          if [ -f "vivid-network.zip" ]; then
+            mkdir -p /tmp/vivid-restore
+            unzip -q "vivid-network.zip" -d /tmp/vivid-restore
+            if [ -d "/tmp/vivid-restore/vivid-network" ]; then
+              cp -a /tmp/vivid-restore/vivid-network/. .
+            else
+              cp -a /tmp/vivid-restore/. .
+            fi
+            mv "vivid-network.zip" ".vivid-network-source.zip"
+          else
+            echo "Source ZIP not found; nothing to restore."
+            exit 0
+          fi
+
+      - name: Commit restored project
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Restore project structure"
+          git push
