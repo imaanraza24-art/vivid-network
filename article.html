@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="doc-title">Article — Vivid Network</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<main id="article-root">
+  <!-- populated by script -->
+</main>
+
+<div id="footer-root"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  function formatDate(iso){
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderNav("articles");
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug");
+    const article = VIVID_ARTICLES.find(a => a.slug === slug);
+    const root = document.getElementById("article-root");
+
+    if(!article){
+      root.innerHTML = `
+        <div class="page-header wrap">
+          <h1 class="display">Story not found.</h1>
+          <p class="sub">This article may have moved or doesn't exist yet.</p>
+          <a href="articles.html" class="link-arrow" style="display:inline-block;margin-top:24px;">← Back to Articles</a>
+        </div>`;
+      return;
+    }
+
+    document.getElementById("doc-title").textContent = `${article.title} — Vivid Network`;
+
+    const related = VIVID_ARTICLES.filter(a => a.slug !== article.slug && a.category === article.category).slice(0,3);
+    const relatedFallback = related.length ? related : VIVID_ARTICLES.filter(a => a.slug !== article.slug).slice(0,3);
+
+    root.innerHTML = `
+      <article class="detail-hero wrap">
+        <div class="detail-meta-row">
+          <span class="cat">${article.category}</span>
+          <span>·</span>
+          <span>${formatDate(article.date)}</span>
+        </div>
+        <h1 class="display detail-title">${article.title}</h1>
+        <p class="detail-subtitle">${article.subtitle}</p>
+        <div class="detail-byline">By ${article.author}</div>
+      </article>
+
+      <div class="wrap">
+        <div class="detail-hero-img"></div>
+        <div class="article-body">
+          ${article.content.map(p => `<p>${p}</p>`).join("")}
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="wrap">
+          <h2 class="related-title display">More from Vivid Network.</h2>
+          <div class="grid-articles" id="related-grid"></div>
+        </div>
+      </section>
+    `;
+
+    document.getElementById("related-grid").innerHTML = relatedFallback.map(a => `
+      <a href="article.html?slug=${a.slug}" class="card-article reveal">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="card-meta"><span class="cat">${a.category}</span></div>
+          <h3>${a.title}</h3>
+          <p>${a.excerpt}</p>
+          <span class="link-arrow">Read Story →</span>
+        </div>
+      </a>
+    `).join("");
+
+    initReveal();
+  });
+</script>
+</body>
+</html>

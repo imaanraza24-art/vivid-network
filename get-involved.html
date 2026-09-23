@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Involved — Vivid Network</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<header class="page-header">
+  <div class="wrap">
+    <span class="eyebrow">Get Involved</span>
+    <h1 class="display" style="margin-top:16px;">Want in?</h1>
+    <p class="sub">Vivid Network is built by young people. Here's how to be part of it.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="grid-2">
+      <div class="involve-card reveal">
+        <span class="eyebrow">01</span>
+        <h3>Become a Contributor</h3>
+        <p>Write articles, make videos, take photos, make art — if you've got a perspective on growing up, there's a place for it on Vivid Network.</p>
+      </div>
+      <div class="involve-card reveal">
+        <span class="eyebrow">02</span>
+        <h3>Be a Guest</h3>
+        <p>Appear on Vivid Voices and talk honestly about identity, culture, friendships, school, or anything else worth saying out loud.</p>
+      </div>
+      <div class="involve-card reveal">
+        <span class="eyebrow">03</span>
+        <h3>Collaborate</h3>
+        <p>Have an idea for a creative project? Vivid Network is open to collaborations that bring new formats and perspectives into the network.</p>
+      </div>
+      <div class="involve-card reveal">
+        <span class="eyebrow">04</span>
+        <h3>Partner With Us</h3>
+        <p>Schools, organizations, youth programs, and youth-focused brands — reach out to explore how we might work together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="submit">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Share Your Story</span>
+      <h2 class="section-title display">Tell us what you've got.</h2>
+    </div>
+
+    <form class="form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row two">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" id="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="age">Age Range</label>
+        <select id="age" required>
+          <option value="">Select an age range</option>
+          <option>13–15</option>
+          <option>16–17</option>
+          <option>18–19</option>
+          <option>20+</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label>Contribution Type</label>
+        <div class="radio-grid">
+          <label class="radio-opt"><input type="radio" name="contribution" value="Article" checked> Article</label>
+          <label class="radio-opt"><input type="radio" name="contribution" value="Podcast Guest"> Podcast Guest</label>
+          <label class="radio-opt"><input type="radio" name="contribution" value="Video"> Video</label>
+          <label class="radio-opt"><input type="radio" name="contribution" value="Photography"> Photography</label>
+          <label class="radio-opt"><input type="radio" name="contribution" value="Art"> Art</label>
+          <label class="radio-opt"><input type="radio" name="contribution" value="Other"> Other</label>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="title">Story / Idea Title</label>
+        <input type="text" id="title" required>
+      </div>
+
+      <div class="form-row">
+        <label for="idea">Tell Us About Your Idea</label>
+        <textarea id="idea" required></textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="social">Social Media (optional)</label>
+        <input type="text" id="social" placeholder="@yourhandle">
+      </div>
+
+      <div class="form-row">
+        <label for="file">Attach a File (optional)</label>
+        <input type="file" id="file">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit Your Story</button>
+      <p class="form-note">Submissions are reviewed before publication.</p>
+    </form>
+
+    <div id="submit-confirm" style="display:none;margin-top:32px;" class="involve-card">
+      <h3>Got it — thank you.</h3>
+      <p>Your submission has been received and will be reviewed by the Vivid Network team before anything is published.</p>
+    </div>
+  </div>
+</section>
+
+<div id="footer-root"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => renderNav("involved"));
+
+  function handleSubmit(e){
+    e.preventDefault();
+    e.target.style.display = "none";
+    document.getElementById("submit-confirm").style.display = "block";
+  }
+</script>
+</body>
+</html>

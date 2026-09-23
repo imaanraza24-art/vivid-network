@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search — Vivid Network</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<header class="page-header" style="padding-bottom:0;">
+  <div class="wrap">
+    <span class="eyebrow">Search</span>
+    <h1 class="display" style="margin-top:16px;">Search Vivid.</h1>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="search-box">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="flex:0 0 auto;color:var(--text-faint);"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="search-input" placeholder="Search articles, episodes, topics…" autocomplete="off">
+    </div>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</section>
+
+<div id="footer-root"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script src="assets/search.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => renderNav("search"));
+</script>
+</body>
+</html>

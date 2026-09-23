@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles — Vivid Network</title>
+<meta name="description" content="Stories, perspectives, culture, and conversations from young people.">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<header class="page-header">
+  <div class="wrap">
+    <span class="eyebrow">Articles</span>
+    <h1 class="display" style="margin-top:16px;">Articles.</h1>
+    <p class="sub">Stories, perspectives, culture, and conversations from young people.</p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="pill-row" id="category-pills"></div>
+    <div id="featured-slot" style="margin-bottom:28px;"></div>
+    <div class="grid-articles" id="article-grid"></div>
+  </div>
+</section>
+
+<div id="footer-root"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  let activeCategory = "All";
+
+  function formatDate(iso){
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function cardHTML(a, featured){
+    if(featured){
+      return `
+        <a href="article.html?slug=${a.slug}" class="card-article featured reveal">
+          <div class="thumb"></div>
+          <div class="body">
+            <div class="card-meta"><span class="cat">${a.category}</span><span>·</span><span>${formatDate(a.date)}</span></div>
+            <h3>${a.title}</h3>
+            <p>${a.excerpt}</p>
+            <span class="link-arrow">Read Story →</span>
+          </div>
+        </a>`;
+    }
+    return `
+      <a href="article.html?slug=${a.slug}" class="card-article reveal">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="card-meta"><span class="cat">${a.category}</span><span>·</span><span>${formatDate(a.date)}</span></div>
+          <h3>${a.title}</h3>
+          <p>${a.excerpt}</p>
+          <span class="link-arrow">Read Story →</span>
+        </div>
+      </a>`;
+  }
+
+  function render(){
+    const filtered = activeCategory === "All"
+      ? VIVID_ARTICLES
+      : VIVID_ARTICLES.filter(a => a.category === activeCategory);
+
+    const featured = activeCategory === "All" ? filtered.find(a => a.featured) : null;
+    const rest = filtered.filter(a => a !== featured);
+
+    document.getElementById("featured-slot").innerHTML = featured ? cardHTML(featured, true) : "";
+    document.getElementById("article-grid").innerHTML = rest.length
+      ? rest.map(a => cardHTML(a, false)).join("")
+      : `<p class="muted" style="grid-column:1/-1;">No stories in this category yet.</p>`;
+
+    initReveal();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderNav("articles");
+
+    document.getElementById("category-pills").innerHTML = VIVID_CATEGORIES.map(cat =>
+      `<button class="pill ${cat === activeCategory ? 'active' : ''}" data-cat="${cat}">${cat}</button>`
+    ).join("");
+
+    document.getElementById("category-pills").addEventListener("click", (e) => {
+      const btn = e.target.closest(".pill");
+      if(!btn) return;
+      activeCategory = btn.dataset.cat;
+      document.querySelectorAll("#category-pills .pill").forEach(p => p.classList.toggle("active", p === btn));
+      render();
+    });
+
+    render();
+  });
+</script>
+</body>
+</html>

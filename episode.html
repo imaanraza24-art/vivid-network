@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="doc-title">Episode — Vivid Voices</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<main id="episode-root"></main>
+
+<div id="footer-root"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  function formatDate(iso){
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderNav("voices");
+
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug");
+    const ep = VIVID_EPISODES.find(e => e.slug === slug);
+    const root = document.getElementById("episode-root");
+
+    if(!ep){
+      root.innerHTML = `
+        <div class="page-header wrap">
+          <h1 class="display">Episode not found.</h1>
+          <p class="sub">This episode may have moved or doesn't exist yet.</p>
+          <a href="vivid-voices.html" class="link-arrow" style="display:inline-block;margin-top:24px;">← Back to Vivid Voices</a>
+        </div>`;
+      return;
+    }
+
+    document.getElementById("doc-title").textContent = `${ep.title} — Vivid Voices`;
+
+    const related = VIVID_EPISODES.filter(e => e.slug !== ep.slug).slice(0,3);
+
+    root.innerHTML = `
+      <article class="detail-hero wrap">
+        <div class="detail-meta-row">
+          <span class="cat">Episode ${String(ep.number).padStart(2,'0')}</span>
+          <span>·</span><span>${formatDate(ep.date)}</span>
+          <span>·</span><span>${ep.duration}</span>
+        </div>
+        <h1 class="display detail-title">${ep.title}</h1>
+        <p class="detail-subtitle">${ep.guest}</p>
+      </article>
+
+      <div class="wrap">
+        <div class="audio-player">
+          <button class="ep-play" aria-label="Play episode">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div class="audio-track">
+            <div class="audio-bar"></div>
+            <div class="audio-time"><span>12:04</span><span>${ep.duration}</span></div>
+          </div>
+        </div>
+
+        <div class="article-body" style="margin-top:48px;">
+          <p>${ep.description}</p>
+          <h2>Episode Notes</h2>
+          ${ep.notes.map(n => `<p>— ${n}</p>`).join("")}
+        </div>
+
+        <div class="listen-links">
+          <a href="#">Listen on Spotify</a>
+          <a href="#">Watch on YouTube</a>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="wrap">
+          <h2 class="related-title display">More episodes.</h2>
+          <div id="related-episodes"></div>
+        </div>
+      </section>
+    `;
+
+    document.getElementById("related-episodes").innerHTML = related.map(e => `
+      <a href="episode.html?slug=${e.slug}" class="card-episode reveal">
+        <span class="ep-num">${String(e.number).padStart(2,'0')}</span>
+        <span class="ep-play" style="width:44px;height:44px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+        <span class="ep-body">
+          <h3>${e.title}</h3>
+          <p>${e.description}</p>
+        </span>
+        <span class="ep-meta">${e.duration}</span>
+      </a>
+    `).join("");
+
+    initReveal();
+  });
+</script>
+</body>
+</html>

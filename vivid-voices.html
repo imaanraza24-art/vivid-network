@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivid Voices — Vivid Network</title>
+<meta name="description" content="Vivid Voices is a teen-led podcast where young people talk honestly about identity, culture, friendships, school, pressure, belonging, social media, and growing up.">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<header class="page-header">
+  <div class="wrap">
+    <span class="eyebrow">The Flagship Podcast</span>
+    <h1 class="display" style="margin-top:16px;">Vivid Voices.</h1>
+    <p class="sub" style="font-family:var(--font-display);font-style:italic;font-size:20px;color:var(--text);">The conversations we wish someone had started sooner.</p>
+    <p class="sub" style="margin-top:18px;">Vivid Voices is a teen-led podcast where young people talk honestly about identity, culture, friendships, school, pressure, belonging, social media, and growing up.</p>
+    <div class="listen-links">
+      <a href="#">Listen on Spotify</a>
+      <a href="#">Watch on YouTube</a>
+    </div>
+  </div>
+</header>
+
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Featured Episode</span>
+    </div>
+    <div id="featured-episode-slot"></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Full Archive</span>
+      <h2 class="section-title display">Every episode.</h2>
+    </div>
+    <div class="pill-row" id="ep-category-pills">
+      <button class="pill active" data-cat="All">All</button>
+      <button class="pill" data-cat="Identity">Identity</button>
+      <button class="pill" data-cat="Culture">Culture</button>
+      <button class="pill" data-cat="Friendships">Friendships</button>
+      <button class="pill" data-cat="Growing Up">Growing Up</button>
+    </div>
+    <div id="episode-list"></div>
+  </div>
+</section>
+
+<div id="footer-root"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script>
+  function formatDate(iso){
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderNav("voices");
+
+    const featured = VIVID_EPISODES.find(e => e.featured);
+    document.getElementById("featured-episode-slot").innerHTML = `
+      <a href="episode.html?slug=${featured.slug}" class="episode-featured reveal" style="display:grid;">
+        <button class="ep-play" aria-label="Play episode">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div>
+          <div class="card-meta"><span class="cat">Episode ${String(featured.number).padStart(2,'0')}</span><span>·</span><span>${featured.duration}</span></div>
+          <h3 class="display">${featured.title}</h3>
+          <p class="muted" style="margin:12px 0 0; max-width:560px;">${featured.description}</p>
+        </div>
+      </a>
+    `;
+
+    const list = document.getElementById("episode-list");
+    function render(){
+      list.innerHTML = VIVID_EPISODES.map(e => `
+        <a href="episode.html?slug=${e.slug}" class="card-episode reveal">
+          <span class="ep-num">${String(e.number).padStart(2,'0')}</span>
+          <span class="ep-play" style="width:44px;height:44px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+          <span class="ep-body">
+            <h3>${e.title}</h3>
+            <p>${e.description}</p>
+          </span>
+          <span class="ep-meta">${formatDate(e.date)}<br>${e.duration}</span>
+        </a>
+      `).join("");
+      initReveal();
+    }
+    render();
+  });
+</script>
+</body>
+</html>

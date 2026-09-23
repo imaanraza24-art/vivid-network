@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivid Network — By Youth. For Youth.</title>
+<meta name="description" content="Vivid Network is a youth-led media platform creating space for teenagers to tell real stories, start conversations, explore culture, and make sense of growing up today.">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<div id="nav-root"></div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="hero-type-layer" id="hero-type-layer" aria-hidden="true"></div>
+
+  <div class="hero-fg">
+    <div class="hero-eyebrow eyebrow">Youth-Led Media</div>
+    <h1 class="hero-title display">VIVID<br>NETWORK</h1>
+    <div class="hero-sub">A Youth Brand.</div>
+    <div class="hero-tagline">By youth. For youth.</div>
+    <p class="hero-desc">A youth-led media platform creating space for teenagers to tell real stories, start conversations, explore culture, and make sense of growing up today.</p>
+    <div class="hero-actions">
+      <a href="about.html" class="btn btn-primary">Explore Vivid</a>
+      <a href="get-involved.html#submit" class="btn btn-ghost">Share Your Story</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-cue" aria-hidden="true"></div>
+</section>
+
+<!-- ================= INTRODUCTION ================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="split reveal">
+      <div>
+        <span class="eyebrow">Introduction</span>
+        <p class="statement" style="margin-top:16px;">By youth. <span class="accent">For youth.</span></p>
+      </div>
+      <div style="padding-top:8px;">
+        <p>Vivid Network exists because teenagers have always had something to say — about identity, culture, friendship, pressure, and what it actually feels like to grow up right now. Most media wasn't built to carry that conversation.</p>
+        <p>Vivid Network is. It's a home for podcasts, articles, interviews, videos, and creative projects made by young people, for young people — with more of the network still to come.</p>
+        <a href="about.html" class="link-arrow">About Vivid →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ================= FEATURED ARTICLE ================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Featured Article</span>
+    </div>
+    <a href="article.html?slug=what-does-it-mean-to-belong" class="card-article featured reveal">
+      <div class="thumb"></div>
+      <div class="body">
+        <div class="card-meta"><span class="cat">Identity</span><span>·</span><span>June 2, 2026</span></div>
+        <h3>What Does It Actually Mean To Belong?</h3>
+        <p>We say we want to belong somewhere, but most of us have never actually stopped to ask what that word is supposed to feel like.</p>
+        <span class="link-arrow">Read Story →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ================= FEATURED EPISODE ================= -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Featured Vivid Voices Episode</span>
+    </div>
+    <div class="episode-featured reveal">
+      <button class="ep-play" aria-label="Play episode">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div>
+        <div class="card-meta"><span class="cat">Episode 12</span><span>·</span><span>38 min</span></div>
+        <h3 class="display">I Thought I Had To Change To Belong</h3>
+        <p class="muted" style="margin:12px 0 22px; max-width:560px;">A conversation about shrinking yourself to fit into rooms that were never built for the real version of you — and what it took to stop.</p>
+        <a href="vivid-voices.html" class="link-arrow">View All Episodes →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ================= LATEST ARTICLES ================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Latest Articles</span>
+      <h2 class="section-title display">Fresh off the network.</h2>
+    </div>
+    <div class="grid-articles" id="latest-articles"></div>
+    <div class="section-foot reveal">
+      <a href="articles.html" class="btn btn-ghost">View All Articles →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ================= WHY VIVID EXISTS ================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="split reveal">
+      <div>
+        <span class="eyebrow">Why Vivid Exists</span>
+        <p style="margin-top:16px;">Teenagers are constantly talked about — by researchers, brands, parents, headlines. Rarely are they handed the mic directly. Vivid Network was built to close that gap: a space where young people speak for themselves, in their own words, on their own terms.</p>
+        <a href="about.html" class="link-arrow">About Vivid →</a>
+      </div>
+      <div>
+        <p class="statement">Teenagers should get to <span class="accent">talk too.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="section" style="padding-bottom:140px;">
+  <div class="wrap" style="text-align:center;">
+    <p class="statement reveal" style="margin:0 auto 40px; text-align:center;">Your story <span class="accent">belongs here.</span></p>
+    <div class="reveal">
+      <a href="get-involved.html#submit" class="btn btn-primary">Share Your Story →</a>
+    </div>
+  </div>
+</section>
+
+<div id="footer-root"></div>
+
+<script src="assets/data.js"></script>
+<script src="assets/components.js"></script>
+<script src="assets/hero.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    renderNav("home");
+    const latest = VIVID_ARTICLES.filter(a => !a.featured).slice(0, 3);
+    document.getElementById("latest-articles").innerHTML = latest.map(a => `
+      <a href="article.html?slug=${a.slug}" class="card-article reveal">
+        <div class="thumb"></div>
+        <div class="body">
+          <div class="card-meta"><span class="cat">${a.category}</span></div>
+          <h3>${a.title}</h3>
+          <p>${a.excerpt}</p>
+          <span class="link-arrow">Read Story →</span>
+        </div>
+      </a>
+    `).join("");
+    initReveal();
+  });
+</script>
+</body>
+</html>
